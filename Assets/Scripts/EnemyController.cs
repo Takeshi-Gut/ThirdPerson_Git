@@ -31,6 +31,22 @@ public class EnemyController : MonoBehaviour
     /// </summary>
     private NavMeshAgent enemyNavMeshAgent;
 
+    /// <summary>
+    /// 敵の移動速度
+    /// </summary>
+    private float enemyVelocity = 0f;
+
+    /// <summary>
+    /// 敵のアニメーター
+    /// </summary>
+    private Animator enemyAnimator;
+
+    /// <summary>
+    /// Enemyのソナー
+    /// </summary>
+    private Sonar enemySonar;
+
+
 
     /// <summary>
     /// 死亡したときの処理
@@ -48,6 +64,9 @@ public class EnemyController : MonoBehaviour
         // NavMeshAgentコンポーネントを取得
         enemyNavMeshAgent = GetComponent<NavMeshAgent>();
 
+        // Animatorコンポーネントを取得
+        enemyAnimator = GetComponent<Animator>();
+
 
         // このゲームオブジェクトからHealthのコンポーネントを取得し、enemyHealthに代入する
         enemyHealth = GetComponent<Health>();
@@ -58,6 +77,10 @@ public class EnemyController : MonoBehaviour
             // エネミーヘルスのOnDieに、エネミーコントローラーのOnDieを設定する
             enemyHealth.OnDie += OnDie;
         }
+
+        // 敵のSonerのコンポーネントを取得
+        enemySonar = GetComponentInChildren<Sonar>();
+
 
         //敵を構成するgameObjectをすべて取得する
         var enemyParts = this.gameObject.GetComponentsInChildren<Transform>();
@@ -84,11 +107,24 @@ public class EnemyController : MonoBehaviour
         {
             return;
         }
+
+        // ソナーに反応がなかったら
+        if (!enemySonar.GetIsListen)
+        {
+            return;
+        }
+
         // NavMeshが準備できているなら
         if (enemyNavMeshAgent.pathStatus != NavMeshPathStatus.PathInvalid)
         {
             // NavMeshAgentに目的地をセット
             enemyNavMeshAgent.SetDestination(TargetObject.position);
+            // NavMeshAgentの速度をenemySpeedに代入
+            enemyVelocity = enemyNavMeshAgent.velocity.sqrMagnitude;
+
+            Debug.Log(enemyVelocity);
+
+            enemyAnimator.SetFloat("Velocity", enemyVelocity);
         }
     }
 }

@@ -603,6 +603,28 @@ namespace StarterAssets
                 GroundedRadius);
         }
 
+        private void PlayClipAtPoint(
+            AudioClip clip,
+            Vector3 position,
+            [UnityEngine.Internal.DefaultValue("1.0F")]float volume)
+        {
+            GameObject gameObject = new GameObject("One shot audio");
+            gameObject.transform.position = position;
+            gameObject.transform.parent = this.transform;
+            AudioSource audioSource =
+                (AudioSource)gameObject.AddComponent(typeof(AudioSource));
+            audioSource.clip = clip;
+            audioSource.spatialBlend = 1f;
+            audioSource.volume = volume;
+            audioSource.Play();
+            Object.Destroy(gameObject,clip.length * ((Time.timeScale < 0.01f)? 0.01f :Time.timeScale));
+        }
+
+
+
+
+
+
         private void OnFootstep(AnimationEvent animationEvent)
         {
             if (animationEvent.animatorClipInfo.weight > 0.5f)
@@ -610,7 +632,9 @@ namespace StarterAssets
                 if (FootstepAudioClips.Length > 0)
                 {
                     var index = Random.Range(0, FootstepAudioClips.Length);
-                    AudioSource.PlayClipAtPoint(FootstepAudioClips[index], transform.TransformPoint(_controller.center), FootstepAudioVolume);
+                    PlayClipAtPoint(FootstepAudioClips[index], 
+                        transform.TransformPoint(_controller.center),
+                        FootstepAudioVolume);
                 }
             }
         }
@@ -619,7 +643,9 @@ namespace StarterAssets
         {
             if (animationEvent.animatorClipInfo.weight > 0.5f)
             {
-                AudioSource.PlayClipAtPoint(LandingAudioClip, transform.TransformPoint(_controller.center), FootstepAudioVolume);
+                PlayClipAtPoint(LandingAudioClip, 
+                    transform.TransformPoint(_controller.center),
+                    FootstepAudioVolume);
             }
         }
     }
