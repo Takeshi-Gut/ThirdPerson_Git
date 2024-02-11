@@ -175,6 +175,12 @@ public class ValueTest : MonoBehaviour
         return (value1 + value2 + value3) / 3; // 戻り値、返り値
     }
 
+    public float SUM(float value1 ,float value2 ,float value3)
+    {
+        return value1 + value2 + value3;　// 足し算、合計
+    }
+
+
 
 
 
