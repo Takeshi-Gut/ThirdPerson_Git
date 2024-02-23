@@ -16,7 +16,8 @@ public class CubeMover : MonoBehaviour
     {
 
         //X•ûŒü‚ÉˆÚ“®‚·‚é(‰E•ûŒü)
-        transform.Translate(1.0f * Time.deltaTime, 0, 0);
+        //transform.Translate(1.0f * Time.deltaTime, 0, 0);
+        transform.position += new Vector3(1.0f , 0,0) * Time.deltaTime;
 
     }
 }
