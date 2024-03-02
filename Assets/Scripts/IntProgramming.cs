@@ -45,8 +45,9 @@ public class IntProgramming : MonoBehaviour
     /// </summary>
     private int whipWeaponPower = 600;
 
-    private int shieldDefencePower = 50;
-    private int armorDefencePower = 30;
+    // private int shieldDefencePower = 50;
+    // private int armorDefencePower = 30;
+
 
 
 
@@ -62,56 +63,62 @@ public class IntProgramming : MonoBehaviour
         Axe,
         Hammer,
         Wand,
-        Whip,
-        Shield
+        Whip// 鞭
     }
 
+    /*
     public enum DefenceTypes
     {
-        Shield,// 鎧
-        Armor// 盾
+        Shield,// 盾
+        Armor// 鎧
     }
+    */
 
 
 
     //課題：引数にint型の防御力を追加する
-    public int TakeDamage(WeaponTypes weaponTypes,int defensePower)
+    // public int TakeDamage(WeaponTypes weaponTypes,DefenceTypes defensePower)
+    public int TakeDamage(WeaponTypes weaponTypes, int defensePower)
     {
+        defensePower = 100;
+
         // switch文は一つの値に対して比較を行なうことができる
         switch (weaponTypes)
         {
             case WeaponTypes.Sword:
-                damage = humanPower + swordWeaponPower;
+                damage = humanPower + swordWeaponPower - defensePower ;
                 break;
             case WeaponTypes.Spear:
-                damage = humanPower + SpearWeaponPower;
+                damage = humanPower + SpearWeaponPower - defensePower;
                 break;
             case WeaponTypes.Axe:
-                damage = humanPower + axeWeaponPower;
+                damage = humanPower + axeWeaponPower - defensePower;
                 break;
             case WeaponTypes.Hammer:
-                damage = humanPower + hammerWeaponPower;
+                damage = humanPower + hammerWeaponPower - defensePower;
                 break;
             case WeaponTypes.Wand:
-                damage = humanPower + wandWeaponPower;
+                damage = humanPower + wandWeaponPower - defensePower;
                 break;
             case WeaponTypes.Whip:
-                damage = humanPower + whipWeaponPower;
+                damage = humanPower + whipWeaponPower - defensePower;
                 break;
+
         }
 
+        /*
         switch (defensePower)
         {
             case DefenceTypes.Shield:
-                damage = humanPower - shieldDefencePower;
+                damage = humanPower + shieldDefencePower;
                 break;
             case DefenceTypes.Armor:
-                damage = humanPower - armorDefencePower;
+                damage = humanPower + armorDefencePower;
                 break;
         }
-
+        */
         return damage;
-
+        
     }
 
 
@@ -174,8 +181,17 @@ public class IntProgramming : MonoBehaviour
         Debug.Log(TakeDamage(false, false, true));// 280
         */
 
+
+        // もしdamageが0を下回った場合は１とする
+        if (damage <= 0)
+        {
+            damage = 1;
+        }
+
         // enum型で定義したWeaponTypesによるダメージ値（剣の場合）
-        Debug.Log(TakeDamage(WeaponTypes.Whip));
+        // Debug.Logで出力
+        Debug.Log(damage);
+
 
         Debug.Log("Level2に必要な経験値は：" + GetPlayerLevelupPoint(2));
         Debug.Log("Level3に必要な経験値は：" + GetPlayerLevelupPoint(3));
