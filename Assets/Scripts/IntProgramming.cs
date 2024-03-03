@@ -80,46 +80,51 @@ public class IntProgramming : MonoBehaviour
     // public int TakeDamage(WeaponTypes weaponTypes,DefenceTypes defensePower)
     public int TakeDamage(WeaponTypes weaponTypes, int defensePower)
     {
-        defensePower = 100;
 
         // switch文は一つの値に対して比較を行なうことができる
         switch (weaponTypes)
         {
             case WeaponTypes.Sword:
-                damage = humanPower + swordWeaponPower - defensePower ;
+                damage = humanPower + swordWeaponPower;
                 break;
             case WeaponTypes.Spear:
-                damage = humanPower + SpearWeaponPower - defensePower;
+                damage = humanPower + SpearWeaponPower;
                 break;
             case WeaponTypes.Axe:
-                damage = humanPower + axeWeaponPower - defensePower;
+                damage = humanPower + axeWeaponPower;
                 break;
             case WeaponTypes.Hammer:
-                damage = humanPower + hammerWeaponPower - defensePower;
+                damage = humanPower + hammerWeaponPower;
                 break;
             case WeaponTypes.Wand:
-                damage = humanPower + wandWeaponPower - defensePower;
+                damage = humanPower + wandWeaponPower;
                 break;
             case WeaponTypes.Whip:
-                damage = humanPower + whipWeaponPower - defensePower;
+                damage = humanPower + whipWeaponPower;
                 break;
-
         }
 
-        /*
-        switch (defensePower)
+        // もしdamageが0を下回った場合は１とする
+        if (damage - defensePower <= 0)
         {
-            case DefenceTypes.Shield:
-                damage = humanPower + shieldDefencePower;
-                break;
-            case DefenceTypes.Armor:
-                damage = humanPower + armorDefencePower;
-                break;
+            damage = 1;
+            return damage;
         }
-        */
-        return damage;
-        
+        return damage - defensePower;
     }
+
+    /*
+    switch (defensePower)
+    {
+        case DefenceTypes.Shield:
+            damage = humanPower + shieldDefencePower;
+            break;
+        case DefenceTypes.Armor:
+            damage = humanPower + armorDefencePower;
+            break;
+    }
+    */
+
 
 
 
@@ -182,15 +187,11 @@ public class IntProgramming : MonoBehaviour
         */
 
 
-        // もしdamageが0を下回った場合は１とする
-        if (damage <= 0)
-        {
-            damage = 1;
-        }
 
-        // enum型で定義したWeaponTypesによるダメージ値（剣の場合）
+
+        // enum型で定義したWeaponTypesによるダメージ値（剣の場合）、ディフェンス力100の場合
         // Debug.Logで出力
-        Debug.Log(damage);
+        Debug.Log(TakeDamage(WeaponTypes.Sword, 100));// 150
 
 
         Debug.Log("Level2に必要な経験値は：" + GetPlayerLevelupPoint(2));
@@ -199,5 +200,4 @@ public class IntProgramming : MonoBehaviour
         Debug.Log("Level5に必要な経験値は：" + GetPlayerLevelupPoint(5));
 
     }
-
 }
