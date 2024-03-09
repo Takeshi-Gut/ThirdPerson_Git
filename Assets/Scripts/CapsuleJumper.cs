@@ -21,7 +21,7 @@ public class CapsuleJumper : MonoBehaviour
     {
         // もし、ジャンプするかのBool型の変数がfalseで
         // なおかつ、自分のtransform.positionのY成分が0より大きかったら
-        if (isJump && this.transform.position.y > 0)
+        if (isJump = false && this.transform.position.y > 0)
         {
             // Vector3型で変数fallingPosを作成し、自分のtransfrom.positionを代入する
             Vector3 fallingPos = this.transform.position;
@@ -31,11 +31,17 @@ public class CapsuleJumper : MonoBehaviour
             fallingPos.y -= Time.deltaTime * Physics.gravity.y;
 
             // this.transfrom.positionにVector3型で変数fallingPosを代入する
-            this.transform.position = Vector3.
+            this.transform.position = fallingPos;
         }
 
         // もし、キーボードのスペースキーが押されたら
-        // ジャンプするかのBool型の変数をtrueに代入する
+        if (Input.GetKey(KeyCode.Space))
+        {
+            // ジャンプするかのBool型の変数をtrueに代入する
+            isJump = true;
+        }
+
+
 
         // もし、ジャンプするかのBool型の変数がtrueだった場合
 
