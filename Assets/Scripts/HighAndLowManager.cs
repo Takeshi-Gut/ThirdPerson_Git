@@ -25,14 +25,24 @@ public class HighAndLowManager : MonoBehaviour
             CPU.CPUCard = CPU.CardManager.GetCardData();
 
 
+            // もしPlayer.PlayerCardかCPU.CPUCardがNullなら
+            if (Player.PlayerCard == null || CPU.CPUCard == null)
+            {
+                // Debug.Logに"ゲームが終わりました"と出力してreturnしてください。
+                Debug.Log("ゲームが終わりました");
+                return;
+            }
+
+
+
             // ※1　Debug.LogでPlayerのPlayerCardのCardNumとCPUのCPUCardのCardNumを出力してください。
 
-            Debug.Log("Playerのトランプナンバー"+Player.PlayerCard.CardNum+"と"+ "CPUのトランプナンバー"+CPU.CPUCard.CardNum);
+            Debug.Log("Playerのトランプナンバー" + Player.PlayerCard.CardNum + "と" + "CPUのトランプナンバー" + CPU.CPUCard.CardNum);
 
             // ※2　PlayerのPlayerCardのCardNumとCPUのCPUCardのCardNumがイコールだった場合は
             // Degug.Logにドローと表示してreturnしてください。
 
-            if(Player.PlayerCard.CardNum == CPU.CPUCard.CardNum)
+            if (Player.PlayerCard.CardNum == CPU.CPUCard.CardNum)
             {
                 Debug.Log("ドロー");
             }

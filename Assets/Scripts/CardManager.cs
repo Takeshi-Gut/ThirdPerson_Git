@@ -44,9 +44,62 @@ public class CardManager : MonoBehaviour
     /// <returns></returns>
     public CardData GetCardData()
     {
-        // Random.Range(int min, int max)でmaxまでの値をランダムに取得できます。
+        // まずnullじゃない要素の数を知りたい
+        int notNullCount = 0;
+        for (int i = 0; i < cardDatas.Length; i++)
+        {
+            // cardDatasの配列をまずnullじゃないか調べる
+            if (cardDatas[i] != null)
+            {
+                notNullCount++;
+            }
+        }
+
+        // nullじゃない要素数のcardDataの配列を作る
+        var notNullCardDatas = new CardData[notNullCount];
+
+        // 配列を0番地から登録していきたいので一時変数をindexを0で代入する
+        int index = 0;
+        for (int i = 0; i < cardDatas.Length; i++)
+        {
+            if (cardDatas[i] != null)
+            {
+                notNullCardDatas[index] = cardDatas[i];
+                index++;
+            }
+        }
+
+        // 配列が空だった場合
+        if (notNullCardDatas.Length == 0)
+        {
+            Debug.Log("空なので補充が必要です");
+            return null;
+        }
+
+
+        // Random.Range(int min, int max)でmax（0から51まで52枚）までの値をランダムに取得できます。
+        var randomCount = Random.Range(0, notNullCardDatas.Length);
+
+        // cardDatasの中でrandomCount目のcardDataを一時変数に格納する。
+        var choiceCard = notNullCardDatas[randomCount];
+
+        // cardDatasの中でchoiceCardと同じカードをnullにする
+        for (int i = 0; i < cardDatas.Length; i++)
+        {
+            if (cardDatas[i] == choiceCard)
+            {
+                cardDatas[i] = null;
+            }
+        }
+
+        // cardDatasのrandomCount目のデータをnullに格納する。
+        // cardDatas[randomCount] = null;
+
+        // 先ほど選んだcardDataは一時変数になっているので、それを返す。
+        return choiceCard;
+
         // intで指定した場合は、maxの値は入らないので+1をすると良いです。
-        return cardDatas[Random.Range(0, cardDatas.Length)];
+        // return cardDatas[Random.Range(0, cardDatas.Length)];
     }
 
 
